@@ -2,7 +2,7 @@ package goscore_test
 
 import (
 	"encoding/xml"
-	"github.com/asafschers/goscore"
+	"github.com/stillmatic/goscore"
 	"testing"
 )
 

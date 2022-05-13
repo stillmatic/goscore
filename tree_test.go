@@ -3,7 +3,7 @@ package goscore_test
 import (
 	"encoding/xml"
 	"errors"
-	"github.com/asafschers/goscore"
+	"github.com/stillmatic/goscore"
 	"io/ioutil"
 	"testing"
 )
@@ -14,17 +14,17 @@ var TreeTests = []struct {
 	err      error
 }{
 	{map[string]interface{}{},
-		4.3463944950723456E-4,
+		4.3463944950723456e-4,
 		nil,
 	},
 	{
 		map[string]interface{}{"f2": "f2v1"},
-		-1.8361380219689046E-4,
+		-1.8361380219689046e-4,
 		nil,
 	},
 	{
 		map[string]interface{}{"f2": "f2v1", "f1": "f1v3"},
-		-6.237581139073701E-4,
+		-6.237581139073701e-4,
 		nil,
 	},
 	{
@@ -34,7 +34,7 @@ var TreeTests = []struct {
 	},
 	{
 		map[string]interface{}{"f2": "f2v1", "f1": "f1v3", "f4": 0.09},
-		-9.198573460887271E-4,
+		-9.198573460887271e-4,
 		nil,
 	},
 	{
@@ -44,7 +44,7 @@ var TreeTests = []struct {
 	},
 	{
 		map[string]interface{}{"f2": "f2v1", "f1": "f1v3", "f4": 0.09, "f3": "f3v4"},
-		-3.3516227414227926E-4,
+		-3.3516227414227926e-4,
 		nil,
 	},
 	{

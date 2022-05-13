@@ -1,9 +1,9 @@
 package goscore_test
 
 import (
-	"github.com/asafschers/goscore"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/stillmatic/goscore"
 	"testing"
 )
 
