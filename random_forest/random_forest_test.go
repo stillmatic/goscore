@@ -1,10 +1,11 @@
-package goscore_test
+package random_forest_test
 
 import (
+	"testing"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/stillmatic/goscore"
-	"testing"
+	"github.com/stillmatic/goscore/random_forest"
 )
 
 var _ = Describe("RandomForest", func() {
@@ -12,7 +13,7 @@ var _ = Describe("RandomForest", func() {
 		lowScoreFeatures, highScoreFeatures map[string]interface{}
 		lowScore, highScore                 float64
 		errorFeatures                       map[string]interface{}
-		rf                                  goscore.RandomForest
+		rf                                  random_forest.RandomForest
 		err                                 error
 		first                               bool = true
 	)
@@ -51,7 +52,7 @@ var _ = Describe("RandomForest", func() {
 		}
 
 		if first {
-			rf, err = goscore.LoadRandomForest("fixtures/random_forest.pmml")
+			rf, err = random_forest.LoadRandomForest("../fixtures/random_forest.pmml")
 			if err != nil {
 				panic(err)
 			}

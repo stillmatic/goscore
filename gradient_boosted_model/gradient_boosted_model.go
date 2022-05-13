@@ -1,18 +1,20 @@
-package goscore
+package gradient_boosted_model
 
 import (
 	"encoding/xml"
 	"io/ioutil"
 	"math"
 	"sync"
+
+	"github.com/stillmatic/goscore"
 )
 
 // GradientBoostedModel - GradientBoostedModel PMML
 type GradientBoostedModel struct {
-	Version  string  `xml:"version,attr"`
-	Trees    []Node  `xml:"MiningModel>Segmentation>Segment>MiningModel>Segmentation>Segment>TreeModel"`
-	Target   target  `xml:"MiningModel>Segmentation>Segment>MiningModel>Targets>Target"`
-	Constant float64 `xml:"MiningModel>Segmentation>Segment>MiningModel>Output>OutputField>Apply>Constant"`
+	Version  string         `xml:"version,attr"`
+	Trees    []goscore.Node `xml:"MiningModel>Segmentation>Segment>MiningModel>Segmentation>Segment>TreeModel"`
+	Target   target         `xml:"MiningModel>Segmentation>Segment>MiningModel>Targets>Target"`
+	Constant float64        `xml:"MiningModel>Segmentation>Segment>MiningModel>Output>OutputField>Apply>Constant"`
 }
 
 type target struct {
@@ -70,7 +72,7 @@ func (gbm *GradientBoostedModel) traverseConcurrently(features map[string]interf
 	var wg sync.WaitGroup
 	wg.Add(len(gbm.Trees))
 	for _, tree := range gbm.Trees {
-		go func(tree Node, features map[string]interface{}) {
+		go func(tree goscore.Node, features map[string]interface{}) {
 			treeScore, err := tree.TraverseTree(features)
 			scores <- result{ErrorName: err, Score: treeScore}
 			wg.Done()

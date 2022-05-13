@@ -1,9 +1,11 @@
-package goscore
+package logistic_regression
 
 import (
 	"encoding/xml"
 	"errors"
 	"math"
+
+	"github.com/stillmatic/goscore"
 )
 
 type PMMLLR struct {
@@ -13,9 +15,9 @@ type PMMLLR struct {
 
 type LogisticRegression struct {
 	// struct xml:PMML>RegressionModel
-	NormalizationMethod string            `xml:"normalizationMethod,attr"`
-	Fields              []MiningField     `xml:"MiningSchema>MiningField"`
-	RegressionTable     []RegressionTable `xml:"RegressionTable"`
+	NormalizationMethod string                `xml:"normalizationMethod,attr"`
+	Fields              []goscore.MiningField `xml:"MiningSchema>MiningField"`
+	RegressionTable     []RegressionTable     `xml:"RegressionTable"`
 }
 
 // type MiningField struct {
@@ -125,8 +127,8 @@ func (lr *LogisticRegression) Score(args ...interface{}) (string, map[string]flo
 	// calculate confident value with normalization method
 	var normMethod NormalizationMethodMap
 	if lr.NormalizationMethod != "" {
-		if _, ok := NormalizationMethods[lr.NormalizationMethod]; !ok {
-			return "", nil, NormalizationMethodNotImplemented
+		if _, ok := goscore.NormalizationMethods[lr.NormalizationMethod]; !ok {
+			return "", nil, goscore.NormalizationMethodNotImplemented
 		} else {
 			normMethod = NormalizationMethodMaps[lr.NormalizationMethod]
 		}

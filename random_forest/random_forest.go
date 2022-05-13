@@ -1,16 +1,18 @@
-package goscore
+package random_forest
 
 import (
 	"encoding/xml"
 	"io/ioutil"
 	"strconv"
 	"sync"
+
+	"github.com/stillmatic/goscore"
 )
 
 // RandomForest - PMML Random Forest
 type RandomForest struct {
 	XMLName xml.Name
-	Trees   []Node `xml:"MiningModel>Segmentation>Segment>TreeModel"`
+	Trees   []goscore.Node `xml:"MiningModel>Segmentation>Segment>TreeModel"`
 }
 
 // LoadRandomForest - Load Random Forest PMML file to RandomForest struct
@@ -81,7 +83,7 @@ func (rf RandomForest) traverseConcurrently(features map[string]interface{}) cha
 	var wg sync.WaitGroup
 	wg.Add(len(rf.Trees))
 	for _, tree := range rf.Trees {
-		go func(tree Node, features map[string]interface{}) {
+		go func(tree goscore.Node, features map[string]interface{}) {
 			treeScore, err := tree.TraverseTree(features)
 			scoreString := strconv.FormatFloat(treeScore, 'f', -1, 64)
 			messages <- rfResult{ErrorName: err, Score: scoreString}
